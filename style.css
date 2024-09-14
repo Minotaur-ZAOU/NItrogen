@@ -5,7 +5,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-image: url('https://images.unsplash.com/photo-1484749294479-38c3f9066553'); /* 確実なURLを使用 */
+    background-image: url('https://msp.c.yimg.jp/images/v2/FUTi93tXq405grZVGgDqG9PA0x5HtOXWKor9S5d8RrN122ucsGpRMMXHaqnPy2bQhdp-wJqotBf3qdJGqP5ZNrJUUbSjWyb8Y6nS3FPgMRRMJK186QyOVl0jZZosTzLrIS4Z_pvdyDej5HiMXqx9MokfIquAl9BW1-FkvA8XxTRQ7piRnl2stZ1yprqnf3P0NHIVRgOMMZ7pzDpGK2pN5Q==/astrophotography.jpg?errorImage=false'); /* 確実なURLを使用 */
     background-size: cover;
     margin: 0;
     color: white; /* 文字を白色に */
