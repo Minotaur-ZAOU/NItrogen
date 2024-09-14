@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1484749294479-38c3f9066553');
+            background-size: cover;
+            color: white;
+        }
+
+        #searchResults {
+            height: calc(100vh - 40px);
+            overflow: auto;
+            padding: 20px;
+        }
+
+        #closeButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="closeButton">×</button>
+    <div id="searchResults"></div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('q');
+        const searchResults = document.getElementById('searchResults');
+
+        if (query) {
+            // Bingから検索結果を取得
+            searchResults.innerHTML = `
+                <iframe src="https://www.bing.com/search?q=${encodeURIComponent(query)}" 
+                    allowtransparency="true" frameborder="0" scrolling="auto" 
+                    style="border:none;overflow:auto;height:100%;width:100%">
+                </iframe>
+            `;
+        } else {
+            searchResults.innerHTML = "<p>検索クエリが無効です。</p>";
+        }
+
+        // 閉じるボタン
+        document.getElementById('closeButton').addEventListener('click', function () {
+            window.history.back();
+        });
+    </script>
+</body>
+
+</html>
+
