@@ -1,51 +1,93 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-image: url('https://msp.c.yimg.jp/images/v2/FUTi93tXq405grZVGgDqG9PA0x5HtOXWKor9S5d8RrN122ucsGpRMMXHaqnPy2bQhdp-wJqotBf3qdJGqP5ZNrJUUbSjWyb8Y6nS3FPgMRRMJK186QyOVl0jZZosTzLrIS4Z_pvdyDej5HiMXqx9MokfIquAl9BW1-FkvA8XxTRQ7piRnl2stZ1yprqnf3P0NHIVRgOMMZ7pzDpGK2pN5Q==/astrophotography.jpg?errorImage=false'); /* 確実なURLを使用 */
-    background-size: cover;
     margin: 0;
-    color: white; /* 文字を白色に */
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* テキストの影を追加 */
+    padding: 20px;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b, #ff7e5f, #feb47b); /* 虹色のグラデーション */
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
 }
 
 h1 {
-    font-size: 56px; /* 大きなフォントサイズ */
-    margin: 0;
+    text-align: center;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.clock {
+    display: block;
+    margin: 0 20px;
+    border: 1px solid #000;
+    border-radius: 50%;
+}
+
+.description {
+    font-size: 20px;
+    margin-left: 20px;
+    animation: slideIn 5s ease-in-out infinite;
+}
+
+.image-title {
+    width: 100px; /* 画像の横幅を指定 */
+    height: auto; /* 高さは自動調整 */
+    margin-left: 20px; /* 画像と説明の間にスペース */
 }
 
 .search-container {
-    text-align: center;
-    z-index: 1; /* 検索バーを前面に */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-#searchInput {
-    width: 50%;
-    padding: 15px;
-    border: none;
-    border-radius: 25px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* シャドウを追加 */
+input {
+    width: 300px;
+    padding: 10px;
+    margin: 5px;
 }
 
-#searchButton {
-    padding: 15px 30px;
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    border-radius: 25px;
+button {
+    padding: 10px;
+    margin: 5px;
     cursor: pointer;
-    margin-left: 10px; /* ボタンと入力フィールドの間にマージン */
 }
 
-/* ボタンのホバー効果 */
-#searchButton:hover {
-    background-color: #45a049;
+#embed-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.embed-wrapper {
+    margin: 10px;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: red;
+}
+
+.embed-wrapper button {
+    margin-top: 10px;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes slideIn {
+    0% { opacity: 0; transform: translateY(-30px); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(30px); }
 }
