@@ -1,22 +1,788 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Nitrogen Search</title>
+    <title>NItrogen</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://th.bing.com/th/id/OIG2.Wnln.UlFDTVAyzs4L3a2?pid=ImgGn');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .description {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            max-width: 600px;
+            color: black;
+        }
+
+        .clock-container {
+            display: none; /* 初期は非表示 */
+            align-items: center; 
+            justify-content: flex-start; /* 時計を左揃え */
+            padding: 20px;
+        }
+
+        .clock {
+            margin: 20px; /* 時計を右にずらす */
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center; /* 垂直方向に中央揃え */
+            justify-content: center; /* 水平方向に中央揃え */
+            margin-top: 20px; /* 上に余白を追加 */
+        }
+
+        .search-container {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .embed-wrapper {
+            position: relative;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            color: red;
+            font-size: 24px;
+        }
+
+        button {
+            margin: 10px 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        input[type="text"],
+        textarea {
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px 0;
+            width: calc(100% - 12px);
+            border: none;
+            border-radius: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .tab {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        #tetris {
+            border: 2px solid white;
+            width: 200px;
+            height: 400px;
+            background: black;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tetris-block {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: cyan;
+        }
+
+        .memo-container {
+            display: none;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .game-result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: yellow;
+        }
+
+        #clockCanvas {
+            display: block;
+            margin: auto;
+            border: 1px solid white;
+        }
+
+        #hint-modal {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        #hint-modal button {
+            margin-top: 10px;
+        }
+
+        .mobile-controls {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .mobile-button {
+            padding: 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .quick-memo {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .quick-memo-form,
+        .quick-memo-list {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .memo-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        @media (max-width: 600px) {
+            .description {
+                font-size: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-    <div class="header">
-        <h1>Nitrogen</h1>
-    </div>
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="BING" />
-        <button id="searchButton">Search</button>
-    </div>
-    <script src="script.js"></script>
-</body>
+<h1>NItrogen proxy</h1>
 
+<div class="logo-container">
+    <!-- 画像の部分を削除しました -->
+</div>
+
+<div class="flex-container">
+    <div class="clock-container">
+        <canvas id="clockCanvas" class="clock" width="200" height="200"></canvas>
+    </div>
+    <div class="description">
+        <!-- ここに説明文を追加します -->
+    </div>
+
+    <button onclick="showHint()">操作のヒント</button>
+    <button onclick="toggleClock()">時計を表示</button> <!-- 時計ボタンを追加 -->
+</div>
+
+<div class="search-container">
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('embed')">埋め込み</div>
+        <div class="tab" onclick="showTab('history')">履歴</div>
+        <div class="tab" onclick="showTab('favorites')">お気に入り</div>
+        <div class="tab" onclick="showTab('calendar')">カレンダー</div>
+        <div class="tab" onclick="showTab('tetris')">テトリス</div>
+        <div class="tab" onclick="showTab('memo')">メモ</div>
+    </div>
+
+    <div id="embed-tab" class="tab-content">
+        <button onclick="embedDirect()">YoutubeUnblockerを直接埋め込む</button>
+        <input type="text" id="tiktok-url" placeholder="TikTokのURLを入力">
+        <button onclick="embedTikTok()">埋め込む</button>
+        <input type="text" id="nicovideo-url" placeholder="ニコニコ動画のURLを入力">
+        <button onclick="embedNicoNico()">埋め込む</button>
+        <input type="text" id="other-url" placeholder="指定のURLを入力">
+        <button onclick="embedOther()">埋め込む</button>
+        <button onclick="searchBing()">BINGでの検索結果を埋め込む</button>
+        <button onclick="saveData()">データを保存</button>
+        <button onclick="loadData()">データを読み込む</button>
+        <button onclick="goBack()">戻る</button>
+    </div>
+
+    <div id="history-tab" class="tab-content" style="display:none;">
+        <h3>履歴</h3>
+        <ul id="history-list"></ul>
+        <button onclick="clearHistory()">履歴を削除</button>
+        <button onclick="goBack()">戻る</button>
+    </div>
+
+    <div id="favorites-tab" class="tab-content" style="display:none;">
+        <h3>お気に入り</h3>
+        <ul id="favorites-list"></ul>
+        <button onclick="clearFavorites()">お気に入りを削除</button>
+        <button onclick="goBack()">戻る</button>
+    </div>
+
+    <div id="calendar-tab" class="calendar-container">
+        <h3>カレンダー</h3>
+        <input type="date" id="date-input" value="${new Date().toISOString().split('T')[0]}">
+        <button onclick="showDate()">日付を表示</button>
+        <div id="selected-date"></div>
+        <button onclick="goBack()">戻る</button>
+    </div>
+
+    <div id="tetris-tab" class="tab-content" style="display:none;">
+        <h3>テトリス</h3>
+        <div id="tetris"></div>
+        <button onclick="startGame()">ゲームスタート</button>
+        <button onclick="goBack()">戻る</button>
+        <div class="game-result" id="game-result"></div>
+        <div class="mobile-controls">
+            <button class="mobile-button" onclick="moveBlock(-1, 0)">左</button>
+            <button class="mobile-button" onclick="moveBlock(0, 1)">下</button>
+            <button class="mobile-button" onclick="moveBlock(1, 0)">右</button>
+            <button class="mobile-button" onclick="rotateBlock()">回転</button>
+        </div>
+    </div>
+
+    <div id="memo-tab" class="memo-container">
+        <h3>メモ</h3>
+        <textarea id="memo-text" rows="4" placeholder="ここにメモを入力"></textarea>
+        <button onclick="saveMemo()">メモを保存</button>
+        <h4>保存されたメモ:</h4>
+        <ul id="memo-list"></ul>
+        <button onclick="goBack()">戻る</button>
+    </div>
+
+    <div class="quick-memo">
+        <h3>クイックメモ</h3>
+        <div class="quick-memo-form">
+            <input type="text" id="quick-memo-text" placeholder="新しいメモを入力" />
+            <button onclick="addQuickMemo()">追加</button>
+        </div>
+        <div class="quick-memo-list" id="quick-memo-list"></div>
+    </div>
+</div>
+
+<div id="embed-container"></div>
+<div id="hint-modal">
+    <h4>操作のヒント</h4>
+    <p>このサイトでは以下のことが可能です：</p>
+    <ul>
+        <li>動画を埋め込むためのURLを指定します。</li>
+        <li>履歴を確認・削除することができます。</li>
+        <li>お気に入りに動画を追加できます。</li>
+        <li>カレンダーを使用して日付を表示できます。</li>
+        <li>テトリスをプレイできます。</li>
+        <li>メモを作成・保存できます。</li>
+    </ul>
+    <button onclick="closeHint()">閉じる</button>
+</div>
+
+<input type="file" id="file-input" style="display:none;" accept="application/json" onchange="importData(event)">
+
+<script>
+    const canvas = document.getElementById('clockCanvas');
+    const context = canvas.getContext('2d');
+
+    function drawClock() {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+        const hours = now.getHours();
+        const radius = canvas.width / 2;
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        context.beginPath();
+        context.arc(radius, radius, radius - 10, 0, 2 * Math.PI);
+        context.strokeStyle = 'white';
+        context.lineWidth = 5;
+        context.stroke();
+
+        context.save();
+        context.translate(radius, radius);
+        context.rotate((Math.PI / 30) * (minutes + seconds / 60));
+        context.beginPath();
+        context.moveTo(0, 0);
+        context.lineTo(0, -radius * 0.5);
+        context.strokeStyle = 'black';
+        context.lineWidth = 5;
+        context.stroke();
+        context.restore();
+
+        context.save();
+        context.translate(radius, radius);
+        context.rotate((Math.PI / 6) * (hours + minutes / 60));
+        context.beginPath();
+        context.moveTo(0, 0);
+        context.lineTo(0, -radius * 0.4);
+        context.strokeStyle = 'black';
+        context.lineWidth = 7;
+        context.stroke();
+        context.restore();
+
+        context.save();
+        context.translate(radius, radius);
+        context.rotate((Math.PI / 30) * seconds);
+        context.beginPath();
+        context.moveTo(0, 0);
+        context.lineTo(0, -radius * 0.8);
+        context.strokeStyle = 'red';
+        context.lineWidth = 2;
+        context.stroke();
+        context.restore();
+
+        setTimeout(drawClock, 1000);
+    }
+
+    let clockVisible = false; // 時計の表示状態
+    function toggleClock() {
+        clockVisible = !clockVisible;
+        document.querySelector('.clock-container').style.display = clockVisible ? 'flex' : 'none';
+        if (clockVisible) {
+            drawClock();
+        }
+    }
+
+    drawClock();
+
+    let history = [];
+    let favorites = [];
+    let gameData = {
+        embeds: [],
+        score: null,
+        memos: [],
+    };
+
+    function embedDirect() {
+        const embedUrl = "https://yuis9v-8080.csb.app/";
+        addEmbedFrame(embedUrl);
+        addToHistory(embedUrl);
+    }
+
+    function embedTikTok() {
+        const url = document.getElementById('tiktok-url').value;
+        const embed = `https://silver.go4it.com.mx/proxy/${url.replace("tiktok.com", "t.tiktok.com/embed").split('?')[0]}`;
+        addEmbedFrame(embed);
+        addToHistory(embed);
+    }
+
+    function embedNicoNico() {
+        const url = document.getElementById('nicovideo-url').value;
+        const videoId = url.split('/').pop();
+        const embed = `https://silver.go4it.com.mx/proxy/https://embed.nicovideo.jp/watch/${videoId}`;
+        addEmbedFrame(embed);
+        addToHistory(embed);
+    }
+
+    function embedOther() {
+        const url = document.getElementById('other-url').value;
+        const urlPattern = new RegExp('^(https?://|www\\.)[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}.*$');
+        let embedUrl;
+
+        if (urlPattern.test(url)) {
+            embedUrl = `https://silver.go4it.com.mx/proxy/${url}`;
+        } else {
+            embedUrl = `https://silver.go4it.com.mx/proxy/https://www.bing.com/search?q=${encodeURIComponent(url)}`;
+            window.open(embedUrl, '_blank');
+        }
+        addEmbedFrame(embedUrl);
+        addToHistory(embedUrl);
+    }
+
+    function searchBing() {
+        const url = document.getElementById('other-url').value;
+        const bingSearchUrl = `https://silver.go4it.com.mx/proxy/https://www.bing.com/search?q=${encodeURIComponent(url)}`;
+        addEmbedFrame(bingSearchUrl);
+        addToHistory(bingSearchUrl);
+    }
+
+    function addEmbedFrame(src) {
+        const embedContainer = document.getElementById('embed-container');
+        const embedDiv = document.createElement('div');
+        embedDiv.className = 'embed-wrapper';
+
+        const iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.allowFullscreen = true;
+        iframe.width = 485;
+        iframe.height = 402;
+        iframe.frameBorder = 0;
+
+        const closeButton = document.createElement('span');
+        closeButton.innerHTML = '&times;';
+        closeButton.className = 'close-button';
+        closeButton.onclick = () => { embedContainer.removeChild(embedDiv); };
+
+        const fullscreenButton = document.createElement('button');
+        fullscreenButton.innerHTML = '全画面表示';
+        fullscreenButton.onclick = () => {
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            }
+        };
+
+        const favoriteButton = document.createElement('button');
+        favoriteButton.innerHTML = 'お気に入りに追加';
+        favoriteButton.onclick = () => {
+            addToFavorites(src);
+        };
+
+        embedDiv.appendChild(closeButton);
+        embedDiv.appendChild(iframe);
+        embedDiv.appendChild(fullscreenButton);
+        embedDiv.appendChild(favoriteButton);
+        embedContainer.appendChild(embedDiv);
+
+        gameData.embeds.push(src);
+    }
+
+    function addToHistory(url) {
+        history.push(url);
+        updateHistory();
+    }
+
+    function updateHistory() {
+        const historyList = document.getElementById('history-list');
+        historyList.innerHTML = '';
+
+        history.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            historyList.appendChild(li);
+        });
+    }
+
+    function clearHistory() {
+        history = [];
+        updateHistory();
+    }
+
+    function addToFavorites(url) {
+        if (!favorites.includes(url)) {
+            favorites.push(url);
+            updateFavorites();
+        }
+    }
+
+    function updateFavorites() {
+        const favoritesList = document.getElementById('favorites-list');
+        favoritesList.innerHTML = '';
+
+        favorites.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+
+            const copyButton = document.createElement('button');
+            copyButton.innerHTML = 'コピー';
+            copyButton.onclick = () => {
+                navigator.clipboard.writeText(item).then(() => {
+                    alert('コピーしました: ' + item);
+                });
+            };
+
+            li.appendChild(copyButton);
+            favoritesList.appendChild(li);
+        });
+    }
+
+    function clearFavorites() {
+        favorites = [];
+        updateFavorites();
+    }
+
+    function saveData() {
+        const dataStr = JSON.stringify(gameData, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'data.json';
+        link.click();
+    }
+
+    function loadData() {
+        document.getElementById('file-input').click();
+    }
+
+    function importData(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const data = JSON.parse(e.target.result);
+            history = data.history || [];
+            favorites = data.favorites || [];
+            gameData = data.gameData || { embeds: [], score: null, memos: [] };
+
+            updateHistory();
+            updateFavorites();
+        };
+        reader.readAsText(file);
+    }
+
+    function showTab(tab) {
+        document.querySelectorAll('.tab-content, .memo-container, #favorites-tab').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+
+        document.getElementById(`${tab}-tab`).style.display = 'block';
+        document.querySelector(`.tab.active`).classList.add('active');
+    }
+
+    function showDate() {
+        const dateInput = document.getElementById('date-input').value;
+        document.getElementById('selected-date').innerText = `選択された日付: ${dateInput}`;
+    }
+
+    function goBack() {
+        showTab('embed');
+    }
+
+    function saveMemo() {
+        const memoText = document.getElementById('memo-text').value;
+        if (memoText.trim() !== '') {
+            const memoList = document.getElementById('memo-list');
+            const li = document.createElement('li');
+            li.textContent = memoText;
+            memoList.appendChild(li);
+            document.getElementById('memo-text').value = '';
+            gameData.memos.push(memoText);
+        }
+    }
+
+    let board;
+    let currentBlock;
+    let gameInterval;
+    let score = 0;
+
+    function startGame() {
+        board = Array.from({ length: 20 }, () => Array(10).fill(0));
+        currentBlock = createRandomBlock();
+        score = 0;
+        document.getElementById('game-result').textContent = '';
+        gameInterval = setInterval(updateGame, 500);
+    }
+
+    function createRandomBlock() {
+        const shapes = [
+            [[1, 1], [1, 1]],
+            [[0, 1, 1], [1, 1, 0]],
+            [[1, 1, 0], [0, 1, 1]],
+            [[1], [1], [1], [1]],
+            [[1, 1, 1], [0, 1, 0]],
+            [[1, 1, 1], [1, 0, 0]],
+            [[1, 1, 1], [0, 0, 1]],
+        ];
+
+        const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+        return {
+            shape: randomShape,
+            position: { x: 4, y: 0 }
+        };
+    }
+
+    function drawBoard() {
+        const tetrisDiv = document.getElementById('tetris');
+        tetrisDiv.innerHTML = '';
+
+        board.forEach((row, y) => {
+            row.forEach((value, x) => {
+                if (value) {
+                    const block = document.createElement('div');
+                    block.classList.add('tetris-block');
+                    block.style.left = `${x * 20}px`;
+                    block.style.top = `${y * 20}px`;
+                    tetrisDiv.appendChild(block);
+                }
+            });
+        });
+
+        currentBlock.shape.forEach((row, dy) => {
+            row.forEach((value, dx) => {
+                if (value) {
+                    const block = document.createElement('div');
+                    block.classList.add('tetris-block');
+                    block.style.left = `${(currentBlock.position.x + dx) * 20}px`;
+                    block.style.top = `${(currentBlock.position.y + dy) * 20}px`;
+                    tetrisDiv.appendChild(block);
+                }
+            });
+        });
+    }
+
+    function updateGame() {
+        if (!moveBlock(0, 1)) {
+            placeBlock();
+            const clearedLines = clearLines();
+            score += clearedLines * 100;
+            currentBlock = createRandomBlock();
+            if (!isValidPosition(currentBlock)) {
+                endGame();
+                return;
+            }
+        }
+        drawBoard();
+    }
+
+    function endGame() {
+        alert('ゲームオーバー');
+        clearInterval(gameInterval);
+        document.getElementById('game-result').textContent = `ゲームが終了しました。スコア: ${score}`;
+        gameData.score = score;
+    }
+
+    function moveBlock(dx, dy) {
+        currentBlock.position.x += dx;
+        currentBlock.position.y += dy;
+        if (!isValidPosition(currentBlock)) {
+            currentBlock.position.x -= dx;
+            currentBlock.position.y -= dy;
+            return false;
+        }
+        return true;
+    }
+
+    function rotateBlock() {
+        const rotatedShape = currentBlock.shape[0].map((val, index) =>
+            currentBlock.shape.map(row => row[index]).reverse()
+        );
+
+        const previousShape = currentBlock.shape;
+        currentBlock.shape = rotatedShape;
+        if (!isValidPosition(currentBlock)) {
+            currentBlock.shape = previousShape;
+        }
+    }
+
+    function placeBlock() {
+        currentBlock.shape.forEach((row, dy) => {
+            row.forEach((value, dx) => {
+                if (value) {
+                    board[currentBlock.position.y + dy][currentBlock.position.x + dx] = 1;
+                }
+            });
+        });
+    }
+
+    function clearLines() {
+        let clearedLines = 0;
+        board = board.filter(row => {
+            const isFull = row.every(value => value === 1);
+            if (isFull) {
+                clearedLines++;
+                return false;
+            }
+            return true;
+        });
+        while (board.length < 20) {
+            board.unshift(Array(10).fill(0));
+        }
+        return clearedLines;
+    }
+
+    function isValidPosition(block) {
+        return block.shape.every((row, dy) => {
+            return row.every((value, dx) => {
+                if (!value) return true;
+                const x = block.position.x + dx;
+                const y = block.position.y + dy;
+                return x >= 0 && x < 10 && y >= 0 && y < 20 && board[y] && board[y][x] === 0;
+            });
+        });
+    }
+
+    function showHint() {
+        document.getElementById('hint-modal').style.display = 'block';
+    }
+
+    function closeHint() {
+        document.getElementById('hint-modal').style.display = 'none';
+    }
+
+    // クイックメモ機能
+    function addQuickMemo() {
+        const quickMemoText = document.getElementById('quick-memo-text').value;
+        if (quickMemoText.trim() !== '') {
+            const quickMemoList = document.getElementById('quick-memo-list');
+
+            // 新しいメモアイテムを作成
+            const memoItem = document.createElement('div');
+            memoItem.className = 'memo-item';
+            memoItem.textContent = quickMemoText;
+
+            // 削除ボタンを作成
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '削除';
+            deleteButton.onclick = () => {
+                quickMemoList.removeChild(memoItem);
+            };
+
+            memoItem.appendChild(deleteButton);
+            quickMemoList.appendChild(memoItem);
+
+            // 入力フィールドをクリア
+            document.getElementById('quick-memo-text').value = '';
+        }
+    }
+</script>
+</body>
 </html>
