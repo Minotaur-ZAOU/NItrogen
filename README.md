@@ -1,250 +1,143 @@
-# Nitrogen Search - README　ENGLISH
+# NItrogenUnblocker
 
-## Overview
-
-Nitrogen is a simple and elegant search web application designed for mobile devices. It allows users to input search queries and view results using a clean interface. The project utilizes HTML, CSS, and JavaScript to create an intuitive user experience. The application opens search results in a new tab using Bing as the search engine but can be modified to use other engines if desired.
-
-## Features
-
-- **Responsive Design:** Designed to work seamlessly on mobile devices, ensuring that the search input and button are easily accessible.
-- **Search Functionality:** Users can enter their desired search queries and receive results through Bing's search engine.
-- **User-Friendly Interface:** Simple and straightforward user interface, making it easy for anyone to use.
-
-## File Structure
-
-This project consists of four main files:
-
-1. **`index.html`** - The main HTML file containing the structure of the application.
-2. **`style.css`** - The CSS file providing styles to the HTML elements for a polished look.
-3. **`script.js`** - The JavaScript file that contains the functionality to handle the search input and results.
-4. **`vercel.json`** - A configuration file necessary for deploying the application on Vercel.
-
-## Getting Started
-
-### Prerequisites
-
-To run this project locally or deploy it to Vercel, ensure you have the following:
-
-- A modern web browser (e.g., Chrome, Firefox).
-- Internet access to view search results.
-- [Node.js](https://nodejs.org/) installed if you plan to use the Vercel CLI.
-
-### Installation Steps
-
-1. **Clone or Download the Repository:**
-   - Clone the repository or download the files into a directory on your computer.
-
-   ```
-   git clone <repository-url>
-   ```
-
-2. **Open in Your Editor:**
-   - Use any code editor (e.g., VSCode, Sublime Text) to open the directory containing the files.
-
-3. **Run Locally (Optional):**
-   - You can open `index.html` directly in your web browser to test the application locally.
-
-### Deploying on Vercel
-
-To deploy the application on Vercel, follow these steps:
-
-1. **Vercel CLI Installation:**
-   - If you haven’t already, install the Vercel CLI:
-     ```bash
-     npm install -g vercel
-     ```
-
-2. **Login to Vercel:**
-   - Run `vercel login` and follow the instructions to log in to your Vercel account.
-
-3. **Deploy the Project:**
-   - Navigate to the project directory in your terminal and run:
-     ```bash
-     vercel
-     ```
-   - Follow the prompts to deploy the project. Vercel will provide a URL where you can access your live application.
-
-### Configuration File
-
-The `vercel.json` file is used for configuring the deployment settings on Vercel. The configuration specifies how static files should be served and sets up routing for the application.
-
-```json
-{
-    "version": 2,
-    "builds": [
-        {
-            "src": "index.html",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "style.css",
-            "use": "@vercel/static"
-        },
-        {
-            "src": "script.js",
-            "use": "@vercel/static"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/index.html"
-        }
-    ]
-}
-```
-
-### How to Use
-
-1. **Open the Application:**
-   - Visit the Vercel deployment URL provided after deployment.
-  
-2. **Search:**
-   - Type your search query into the input field and click the "検索" button.
-  
-3. **View Results:**
-   - The search results will open in a new tab using the query entered.
-
-## Customization
-
-Feel free to customize the application to fit your needs:
-
-# Nitrogen Search
+![NItrogenUnblocker](https://th.bing.com/th/id/OIG1.wAUOmqH6o8qwts8hzszJ?w=1024&h=1024&rs=1&pid=ImgDetMain)
 
 ## 概要
 
-Nitrogenはシンプルで直感的な検索サイトです。ユーザーはモバイルデバイスでキーボードを使って簡単に検索クエリを入力し、Bingを使って結果を表示することができます。デザインはミニマルで、使いやすさを重視しています。このREADMEでは、プロジェクトの構成、ファイルの説明、インストール手順、デプロイ方法などを詳述します。
+NItrogenUnblockerは、さまざまなストリーミングサービスのコンテンツにアクセスできるようにするためのウェブアプリケーションです。このアプリケーションは、主に日本国内での制限やブロックを回避するために設計されています。ユーザーは、Tiktok、Niconico、YouTubeなどの動画コンテンツを直接埋め込むことができ、さらにメモやテトリスのようなインタラクティブなゲームを楽しむことができます。
 
-## プロジェクトの構成
+## 特徴
 
-このプロジェクトは以下のファイルで構成されています：
+- **動画埋め込み**: ユーザーは、複数の動画プラットフォームからコンテンツを埋め込むオプションを提供しています。
+- **ゲーム機能**: テトリスをプレイすることができるゲームモジュールを統合。
+- **メモ機能**: 備忘録として使えるメモ機能を搭載。
+- **履歴管理**: 過去の埋め込みデータを追跡できる履歴機能。
 
-- `index.html`: サーチボックスとボタンを含むHTMLページ。
-- `style.css`: ページのスタイルを定義するCSSファイル。
-- `script.js`: 検索機能を実装するJavaScriptコード。
-- `vercel.json`: Vercelにデプロイするための設定ファイル。
+## 技術的な詳細
 
-## ファイルの説明
+NItrogenUnblockerは、HTML5、CSS3、JavaScriptを基盤にして構築されています。ユーザーインターフェースは完全にレスポンシブデザインであり、さまざまなデバイスでの利用を考慮しています。以下に各技術の詳細な説明を示します。
 
-### `index.html`
+### HTML5
 
-このファイルはNitrogenのメインページを構成しています。ユーザーが検索クエリを入力するためのテキストボックスと、検索を実行するボタンがあります。基本的なHTML構造で、CSSとJavaScriptファイルをインクルードしています。
+HTML5はこのアプリケーションの基本的な骨格を形成しています。主に、コンテンツの配置を管理し、アプリケーションがどのように構成されるかの概要を提供します。以下の主な要素があります。
 
-```html
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Nitrogen Search</title>
-</head>
-<body>
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search..." />
-        <button id="searchButton">検索</button>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
-```
+- **Canvas**: 時計を描画するための`<canvas>`要素が使用されています。これにより、JavaScriptを使って動的に時計を描画し、時間をリアルタイムで表示することができます。
+- **Input & Button Elements**: ユーザーがURLを入力したり、アクションをトリガーするためのボタンを提供します。
 
-### `style.css`
+### CSS3
 
-このファイルでは、全体のレイアウト、フォント、色、ボタンのホバーエフェクトなど、ページのスタイルを定義しています。ユーザーがシンプルで洗練された見た目の中で快適に検索できるようにデザインされています。
+CSS3はアプリケーションのスタイリングに使用されており、視覚的な体験を向上させる多くのスタイルプロパティが組み込まれています。
 
-```css
-body {
-    ...
-}
-.search-container {
-    ...
-}
-#searchInput {
-    ...
-}
-#searchButton {
-    ...
-}
-#searchButton:hover {
-    ...
-}
-```
+- **背景画像**: ウェブページ全体の背景として使用されます。
+- **レスポンシブデザイン**: メディアクエリを利用して画面サイズに応じてフォントサイズなどを調整します。
 
-### `script.js`
+### JavaScript
 
-このファイルは、ユーザーが検索ボタンをクリックしたときの動作を制御しています。入力された検索クエリを取得し、Bing検索の結果ページを新しいタブで表示する機能を実装しています。
+JavaScriptはアプリケーションの主なロジックを制御し、ユーザーとのインタラクションを処理します。以下はその主な機能です。
 
-```javascript
-document.getElementById('searchButton').addEventListener('click', function() {
-    const query = document.getElementById('searchInput').value;
-    ...
-});
-```
+- **動画埋め込みロジック**: ユーザーが入力したURLを基に、埋め込むためのIFRAMEを動的に生成します。
+- **ゲームロジック**: テトリスの基本的なゲームプレイがJavaScriptで実装されており、ユーザーの操作に基づいてブロックを移動・回転することができます。
+- **メモ機能**: ユーザーが入力したメモを保存・表示するためのロジックが組み込まれており、簡単にアクセスできます。
 
-### `vercel.json`
+## 使用方法
 
-このファイルはVercelにデプロイするための設定を行っています。どのファイルを静的ファイルとして扱うか、どのパスを`index.html`にリダイレクトするかを定義しています。
+1. **埋め込み動画の追加**: 提供されたテキストボックスに動画のURLを入力し、「埋め込む」ボタンをクリックします。
+2. **ゲームプレイ**: テトリスタブに移動し、「ゲームスタート」ボタンを押してゲームを開始します。
+3. **メモの作成**: メモタブに切り替え、テキストエリアにメモを入力し、「保存」ボタンをクリックしてメモを保存します。
 
-```json
-{
-    ...
-}
-```
+## インストールと展開
 
-## インストール手順
+アプリケーションをローカル環境で実行するには、次の手順を行います。
 
-1. リポジトリをクローンまたはダウンロードします。
-2. 上記のファイルを作成し、各ファイルにコードをペーストします。
-3. ローカルで開発したい場合は、任意のHTTPサーバー（例：live-serverやhttp-server）を使用して`index.html`を開きます。
-
-## デプロイ手順
-
-NitrogenをVercelにデプロイするには、以下の手順に従ってください。
-
-1. [Vercelの公式サイト](https://vercel.com/)にアクセスし、アカウントを作成します。
-2. Vercel CLIをインストールします。Node.jsがインストールされている場合は、以下のコマンドでインストールできます。
-
-   ```bash
-   npm install -g vercel
+1. リポジトリをクローンします。
    ```
-
-3. プロジェクトのディレクトリに移動し、以下のコマンドを実行します。
-
-   ```bash
-   vercel
+   git clone https://github.com/your-repository/NItrogenUnblocker.git
    ```
+2. 開発環境をセットアップします。
+3. index.htmlファイルをウェブブラウザで開きます。
 
-4. 質問に答えながらデプロイを進めます。自動的にプロジェクトがVercelにデプロイされます。
+## インターフェース
 
-5. デプロイ後、提供されたURLを通じてサイトにアクセスできるようになります。
+アプリケーションには、使いやすいインターフェースが組み込まれており、以下の要素があります。
 
-## 使い方
+- **タブナビゲーション**: 各機能への簡単なアクセスを提供します。
+- **モーダルウィンドウ**: 操作のヒントや警告メッセージを表示します。
 
-1. ページにアクセスしたら、テキストボックスに検索したいキーワードを入力します。
-2.「検索」ボタンをクリックすると、新しいタブが開き、そのキーワードに関連するBingの検索結果が表示されます。
+## ライセンス
 
-## 注意事項
+NItrogenUnblockerはMITライセンスの元で配布されています。ライセンスについての詳細はLICENSEファイルをご確認ください。
 
-- モバイルデバイスに最適化されていますが、デスクトップでも利用可能です。
-- CORSポリシーにより、一部の機能が制限される可能性があります。
-  
-## 今後の機能
+## まとめ
 
-- 検索履歴の管理機能
-- 検索結果のフィルタリングオプション
-- ダークモードの追加
-
-## 貢献
-
-問題の報告や新機能の提案は大歓迎です。Issuesセクションにお気軽にご連絡ください。
+NItrogenUnblockerは、日本国内のコンテンツ制限を克服するための効果的なツールです。動画の埋め込みからインタラクティブなゲームまで、幅広い機能を提供しています。シンプルなインターフェースと強力な機能により、ユーザーは快適な体験を得ることができます。あなたもぜひ、このアプリケーションを使って新しいエンターテイメントを体験してみてください。
 
 ---
 
-Nitrogenを楽しんでご利用ください！
-- Modify the search engine by changing the URL in `script.js`.
-- Adjust styles in `style.css` to create a unique look.
-  
+# NItrogenUnblocker
+
+NItrogenUnblocker is a web application designed to provide access to various streaming services' content. This application is primarily aimed at bypassing restrictions and blocks commonly encountered in Japan. Users can embed content from platforms such as TikTok, Niconico, and YouTube directly, and enjoy interactive games like Tetris along with memo functionalities.
+
+## Features
+
+- **Video Embedding**: Users can embed content from multiple video platforms easily.
+- **Gaming Functionality**: An integrated gaming module allowing users to play Tetris.
+- **Memo Functionality**: A memo feature that serves as a record-keeping tool.
+- **History Management**: A history feature to track previously embedded data.
+
+## Technical Details
+
+NItrogenUnblocker is built on the foundation of HTML5, CSS3, and JavaScript. The user interface is fully responsive, ensuring usability across various devices. Below are detailed descriptions of the technologies utilized.
+
+### HTML5
+
+HTML5 forms the backbone of this application, providing the structural framework for its functionalities and layout. Key elements include:
+
+- **Canvas**: The `<canvas>` element is utilized for rendering a clock. This allows for real-time drawing using JavaScript, ensuring the time displays dynamically.
+- **Input & Button Elements**: These elements facilitate user interactions for URL inputs and action triggers.
+
+### CSS3
+
+CSS3 is employed to style the application, enhancing the visual experience with numerous style properties.
+
+- **Background Image**: Used as the overarching background for the web page.
+- **Responsive Design**: Media queries adjust font sizes and other styles based on screen dimensions.
+
+### JavaScript
+
+JavaScript controls the main logic of the application, handling user interactions. Key functionalities include:
+
+- **Video Embedding Logic**: Dynamically generates IFAMES based on user-submitted URLs.
+- **Game Logic**: Implements the fundamental gameplay of Tetris in JavaScript, allowing users to move and rotate blocks based on their input.
+- **Memo Functionality**: Logic for saving and displaying user-entered memos is incorporated, allowing easy access.
+
+## Usage
+
+1. **Adding Embedded Videos**: Input the video URL in the provided text box and click the “Embed” button.
+2. **Gameplay**: Navigate to the Tetris tab and press the “Start Game” button to initiate the game.
+3. **Creating Memos**: Switch to the memo tab, enter text in the text area, and click the “Save” button to store the memo.
+
+## Installation and Deployment
+
+To run the application in a local environment, follow these steps:
+
+1. Clone the repository.
+   ```
+   git clone https://github.com/your-repository/NItrogenUnblocker.git
+   ```
+2. Set up your development environment.
+3. Open the index.html file in your web browser.
+
+## Interface
+
+The application comes with a user-friendly interface, incorporating the following elements:
+
+- **Tab Navigation**: Provides easy access to each functionality.
+- **Modal Windows**: Displays operational hints and warning messages.
+
+## License
+
+NItrogenUnblocker is distributed under the MIT License. For further details, please refer to the LICENSE file.
+
 ## Conclusion
 
-Nitrogen is a straightforward and effective search application ready for mobile users. Through this README, you should have all the necessary information to set up, use, and deploy the application on Vercel successfully. If you have any questions or feedback, feel free to reach out! Happy searching!
+NItrogenUnblocker is an effective tool for overcoming content restrictions in Japan. With functionalities ranging from video embedding to interactive gaming, it offers a comprehensive experience. Its simple interface and powerful capabilities ensure users enjoy a seamless experience. Dive in and enhance your entertainment experiences with this application.
