@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NItrogen</title>
+    <title>NItrogen proxy</title>
     <style>
         body {
             margin: 0;
@@ -246,82 +246,87 @@
 </div>
 
 <div class="search-container">
-    <div class="tabs">
-        <div class="tab active" onclick="showTab('embed')">埋め込み</div>
-        <div class="tab" onclick="showTab('history')">履歴</div>
-        <div class="tab" onclick="showTab('favorites')">お気に入り</div>
-        <div class="tab" onclick="showTab('calendar')">カレンダー</div>
-        <div class="tab" onclick="showTab('tetris')">テトリス</div>
-        <div class="tab" onclick="showTab('memo')">メモ</div>
-    </div>
+    <input type="text" id="search-input" placeholder="動画を検索..." />
+    <button onclick="searchVideos()">検索</button>
+</div>
 
-    <div id="embed-tab" class="tab-content">
-        <button onclick="embedDirect()">YoutubeUnblockerを直接埋め込む（画面下部に表示されます。左側のボタンを押してください）</button>
-        <input type="text" id="tiktok-url" placeholder="TikTokのURLを入力">
-        <button onclick="embedTikTok()">埋め込む</button>
-        <input type="text" id="nicovideo-url" placeholder="ニコニコ動画のURLを入力">
-        <button onclick="embedNicoNico()">埋め込む</button>
-        <input type="text" id="other-url" placeholder="指定のURLを入力">
-        <button onclick="embedOther()">埋め込む</button>
-        <button onclick="searchBing()">BINGでの検索結果を埋め込む</button>
-        <button onclick="saveData()">データを保存</button>
-        <button onclick="loadData()">データを読み込む</button>
-        <button onclick="goBack()">戻る</button>
-    </div>
+<div class="search-results" id="search-results"></div>
 
-    <div id="history-tab" class="tab-content" style="display:none;">
-        <h3>履歴</h3>
-        <ul id="history-list"></ul>
-        <button onclick="clearHistory()">履歴を削除</button>
-        <button onclick="goBack()">戻る</button>
-    </div>
+<div class="tabs">
+    <div class="tab active" onclick="showTab('embed')">埋め込み</div>
+    <div class="tab" onclick="showTab('history')">履歴</div>
+    <div class="tab" onclick="showTab('favorites')">お気に入り</div>
+    <div class="tab" onclick="showTab('calendar')">カレンダー</div>
+    <div class="tab" onclick="showTab('tetris')">テトリス</div>
+    <div class="tab" onclick="showTab('memo')">メモ</div>
+</div>
 
-    <div id="favorites-tab" class="tab-content" style="display:none;">
-        <h3>お気に入り</h3>
-        <ul id="favorites-list"></ul>
-        <button onclick="clearFavorites()">お気に入りを削除</button>
-        <button onclick="goBack()">戻る</button>
-    </div>
+<div id="embed-tab" class="tab-content">
+    <button onclick="embedDirect()">YoutubeUnblockerを直接埋め込む（画面下部に表示されます。左側のボタンを押してください）</button>
+    <input type="text" id="tiktok-url" placeholder="TikTokのURLを入力">
+    <button onclick="embedTikTok()">埋め込む</button>
+    <input type="text" id="nicovideo-url" placeholder="ニコニコ動画のURLを入力">
+    <button onclick="embedNicoNico()">埋め込む</button>
+    <input type="text" id="other-url" placeholder="指定のURLを入力">
+    <button onclick="embedOther()">埋め込む</button>
+    <button onclick="searchBing()">BINGでの検索結果を埋め込む</button>
+    <button onclick="saveData()">データを保存</button>
+    <button onclick="loadData()">データを読み込む</button>
+    <button onclick="goBack()">戻る</button>
+</div>
 
-    <div id="calendar-tab" class="calendar-container">
-        <h3>カレンダー</h3>
-        <input type="date" id="date-input" value="${new Date().toISOString().split('T')[0]}">
-        <button onclick="showDate()">日付を表示</button>
-        <div id="selected-date"></div>
-        <button onclick="goBack()">戻る</button>
-    </div>
+<div id="history-tab" class="tab-content" style="display:none;">
+    <h3>履歴</h3>
+    <ul id="history-list"></ul>
+    <button onclick="clearHistory()">履歴を削除</button>
+    <button onclick="goBack()">戻る</button>
+</div>
 
-    <div id="tetris-tab" class="tab-content" style="display:none;">
-        <h3>テトリス</h3>
-        <div id="tetris"></div>
-        <button onclick="startGame()">ゲームスタート</button>
-        <button onclick="goBack()">戻る</button>
-        <div class="game-result" id="game-result"></div>
-        <div class="mobile-controls">
-            <button class="mobile-button" onclick="moveBlock(-1, 0)">左</button>
-            <button class="mobile-button" onclick="moveBlock(0, 1)">下</button>
-            <button class="mobile-button" onclick="moveBlock(1, 0)">右</button>
-            <button class="mobile-button" onclick="rotateBlock()">回転</button>
-        </div>
-    </div>
+<div id="favorites-tab" class="tab-content" style="display:none;">
+    <h3>お気に入り</h3>
+    <ul id="favorites-list"></ul>
+    <button onclick="clearFavorites()">お気に入りを削除</button>
+    <button onclick="goBack()">戻る</button>
+</div>
 
-    <div id="memo-tab" class="memo-container">
-        <h3>メモ</h3>
-        <textarea id="memo-text" rows="4" placeholder="ここにメモを入力"></textarea>
-        <button onclick="saveMemo()">メモを保存</button>
-        <h4>保存されたメモ:</h4>
-        <ul id="memo-list"></ul>
-        <button onclick="goBack()">戻る</button>
-    </div>
+<div id="calendar-tab" class="calendar-container">
+    <h3>カレンダー</h3>
+    <input type="date" id="date-input" value="${new Date().toISOString().split('T')[0]}">
+    <button onclick="showDate()">日付を表示</button>
+    <div id="selected-date"></div>
+    <button onclick="goBack()">戻る</button>
+</div>
 
-    <div class="quick-memo">
-        <h3>クイックメモ</h3>
-        <div class="quick-memo-form">
-            <input type="text" id="quick-memo-text" placeholder="新しいメモを入力" />
-            <button onclick="addQuickMemo()">追加</button>
-        </div>
-        <div class="quick-memo-list" id="quick-memo-list"></div>
+<div id="tetris-tab" class="tab-content" style="display:none;">
+    <h3>テトリス</h3>
+    <div id="tetris"></div>
+    <button onclick="startGame()">ゲームスタート</button>
+    <button onclick="goBack()">戻る</button>
+    <div class="game-result" id="game-result"></div>
+    <div class="mobile-controls">
+        <button class="mobile-button" onclick="moveBlock(-1, 0)">左</button>
+        <button class="mobile-button" onclick="moveBlock(0, 1)">下</button>
+        <button class="mobile-button" onclick="moveBlock(1, 0)">右</button>
+        <button class="mobile-button" onclick="rotateBlock()">回転</button>
     </div>
+</div>
+
+<div id="memo-tab" class="memo-container">
+    <h3>メモ</h3>
+    <textarea id="memo-text" rows="4" placeholder="ここにメモを入力"></textarea>
+    <button onclick="saveMemo()">メモを保存</button>
+    <h4>保存されたメモ:</h4>
+    <ul id="memo-list"></ul>
+    <button onclick="goBack()">戻る</button>
+</div>
+
+<div class="quick-memo">
+    <h3>クイックメモ</h3>
+    <div class="quick-memo-form">
+        <input type="text" id="quick-memo-text" placeholder="新しいメモを入力" />
+        <button onclick="addQuickMemo()">追加</button>
+    </div>
+    <div class="quick-memo-list" id="quick-memo-list"></div>
 </div>
 
 <div id="embed-container"></div>
@@ -414,6 +419,30 @@
         score: null,
         memos: [],
     };
+
+    function searchVideos() {
+        const query = document.getElementById('search-input').value;
+        const searchResultsContainer = document.getElementById('search-results');
+        searchResultsContainer.innerHTML = '';
+
+        const invidiousInstance = 'https://your.invidious.instance'; // あなたのInvidiousインスタンス
+        fetch(`${invidiousInstance}/api/v1/search?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(video => {
+                    const videoElement = document.createElement('div');
+                    videoElement.innerHTML = `<h4>${video.title}</h4>
+                                              <button onclick="embedVideo('${video.videoId}')">埋め込む</button>`;
+                    searchResultsContainer.appendChild(videoElement);
+                });
+            })
+            .catch(error => console.error('Error fetching videos:', error));
+    }
+
+    function embedVideo(videoId) {
+        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+        addEmbedFrame(embedUrl);
+    }
 
     function embedDirect() {
         const embedUrl = "https://yuis9v-8080.csb.app/";
