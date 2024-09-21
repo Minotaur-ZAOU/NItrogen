@@ -36,21 +36,21 @@
         }
 
         .clock-container {
-            display: none; /* 初期は非表示 */
-            align-items: center; 
-            justify-content: flex-start; /* 時計を左揃え */
+            display: none;
+            align-items: center;
+            justify-content: flex-start;
             padding: 20px;
         }
 
         .clock {
-            margin: 20px; /* 時計を右にずらす */
+            margin: 20px;
         }
 
         .logo-container {
             display: flex;
-            align-items: center; /* 垂直方向に中央揃え */
-            justify-content: center; /* 水平方向に中央揃え */
-            margin-top: 20px; /* 上に余白を追加 */
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
         }
 
         .search-container {
@@ -401,7 +401,7 @@
         setTimeout(drawClock, 1000);
     }
 
-    let clockVisible = false; // 時計の表示状態
+    let clockVisible = false;
     function toggleClock() {
         clockVisible = !clockVisible;
         document.querySelector('.clock-container').style.display = clockVisible ? 'flex' : 'none';
@@ -425,7 +425,7 @@
         const searchResultsContainer = document.getElementById('search-results');
         searchResultsContainer.innerHTML = '';
 
-        const invidiousInstance = 'https://your.invidious.instance'; // あなたのInvidiousインスタンス
+        const invidiousInstance = 'https://gold.go4it.com.mx'; // InvidiousインスタンスのURL
         fetch(`${invidiousInstance}/api/v1/search?q=${encodeURIComponent(query)}`)
             .then(response => response.json())
             .then(data => {
