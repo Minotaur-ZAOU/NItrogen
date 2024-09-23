@@ -243,6 +243,7 @@
 
     <button onclick="showHint()">操作のヒント</button>
     <button onclick="toggleClock()">時計を表示</button> <!-- 時計ボタンを追加 -->
+    <button onclick="openAboutBlank()">Open External <code>about:blank</code> link</button> <!-- 新しいボタン -->
 </div>
 
 <div class="search-container">
@@ -745,7 +746,7 @@
                 if (!value) return true;
                 const x = block.position.x + dx;
                 const y = block.position.y + dy;
-                return x >= 0 && x < 10 && y >= 0 && y < 20 && board[y] && board[y][x] === 0;
+                return x >= 0 && x < 10 && y >= 0 &&  y < 20 && board[y] && board[y][x] === 0;
             });
         });
     }
@@ -756,6 +757,29 @@
 
     function closeHint() {
         document.getElementById('hint-modal').style.display = 'none';
+    }
+
+    function openAboutBlank() {
+        // about:blankを新規ウィンドウで開く
+        const aboutBlankWindow = window.open('about:blank', '_blank');
+        // ホストしているサイトのURLを取得
+        const currentUrl = window.location.href;
+        // about:blankにURLを埋め込む
+        aboutBlankWindow.document.write(`
+            <html>
+                <head>
+                    <title>Embedded URL</title>
+                    <style>
+                        body { font-size: 24px; text-align: center; margin-top: 20%; }
+                    </style>
+                </head>
+                <body>
+                    <h1>埋め込まれたURL:</h1>
+                    <p>${currentUrl}</p>
+                </body>
+            </html>
+        `);
+        aboutBlankWindow.document.close(); // Documentを閉じて描画を完了する
     }
 
     // クイックメモ機能
