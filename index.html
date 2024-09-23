@@ -36,21 +36,21 @@
         }
 
         .clock-container {
-            display: none; /* 初期は非表示 */
+            display: none;
             align-items: center; 
-            justify-content: flex-start; /* 時計を左揃え */
+            justify-content: flex-start;
             padding: 20px;
         }
 
         .clock {
-            margin: 20px; /* 時計を右にずらす */
+            margin: 20px;
         }
 
         .logo-container {
             display: flex;
-            align-items: center; /* 垂直方向に中央揃え */
-            justify-content: center; /* 水平方向に中央揃え */
-            margin-top: 20px; /* 上に余白を追加 */
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
         }
 
         .search-container {
@@ -397,7 +397,7 @@
         setTimeout(drawClock, 1000);
     }
 
-    let clockVisible = false; // 時計の表示状態
+    let clockVisible = false; 
     function toggleClock() {
         clockVisible = !clockVisible;
         document.querySelector('.clock-container').style.display = clockVisible ? 'flex' : 'none';
@@ -760,25 +760,27 @@
     }
 
     function openAboutBlank() {
-        // about:blankを新規ウィンドウで開く
-        const aboutBlankWindow = window.open('about:blank', '_blank');
-        // ホストしているサイトのURLを取得
-        const currentUrl = window.location.href;
-        // about:blankにURLを埋め込む
-        aboutBlankWindow.document.write(`
+        const currentUrl = window.location.href; // ホストしているサイトのURLを取得
+        const aboutBlankWindow = window.open('about:blank', '_blank'); // about:blankを開く
+
+        // about:blankに埋め込む内容を組み立てる
+        const content = `
             <html>
                 <head>
-                    <title>Embedded URL</title>
+                    <title>Embedded Site</title>
                     <style>
-                        body { font-size: 24px; text-align: center; margin-top: 20%; }
+                        body { margin: 0; }
+                        iframe { width: 100vw; height: 100vh; border: none; }
                     </style>
                 </head>
                 <body>
-                    <h1>埋め込まれたURL:</h1>
-                    <p>${currentUrl}</p>
+                    <iframe src="${currentUrl}" allowfullscreen></iframe>
                 </body>
             </html>
-        `);
+        `;
+        
+        // about:blankウィンドウに内容を埋め込む
+        aboutBlankWindow.document.write(content);
         aboutBlankWindow.document.close(); // Documentを閉じて描画を完了する
     }
 
@@ -787,13 +789,10 @@
         const quickMemoText = document.getElementById('quick-memo-text').value;
         if (quickMemoText.trim() !== '') {
             const quickMemoList = document.getElementById('quick-memo-list');
-
-            // 新しいメモアイテムを作成
             const memoItem = document.createElement('div');
             memoItem.className = 'memo-item';
             memoItem.textContent = quickMemoText;
 
-            // 削除ボタンを作成
             const deleteButton = document.createElement('button');
             deleteButton.textContent = '削除';
             deleteButton.onclick = () => {
@@ -802,9 +801,7 @@
 
             memoItem.appendChild(deleteButton);
             quickMemoList.appendChild(memoItem);
-
-            // 入力フィールドをクリア
-            document.getElementById('quick-memo-text').value = '';
+            document.getElementById('quick-memo-text').value = ''; // 入力フィールドをクリア
         }
     }
 </script>
